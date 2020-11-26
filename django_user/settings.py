@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'core',
+    'social',
+    'social_django',
+
 ]
 
 MIDDLEWARE = [
@@ -49,6 +52,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'django_user.urls'
@@ -56,7 +61,7 @@ ROOT_URLCONF = 'django_user.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR + '/templates/',],
+        'DIRS': [BASE_DIR + '/templates/', ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -64,6 +69,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -130,3 +138,23 @@ LOGIN_REDIRECT_URL = 'home'
 
 # This will display email in Console.
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.github.GithubOAuth2',
+
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
+LOGIN_REDIRECT_URL = 'home'
+
+
+SOCIAL_AUTH_FACEBOOK_KEY = '415217522943480'  # App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = '5ccc0bd8425f6ff2f783b1f028cf279c'  # App Secret
+
+
+SOCIAL_AUTH_TWITTER_KEY = 'Hb91vpJTQjDak8uKJOKUBT32p'
+SOCIAL_AUTH_TWITTER_SECRET = 'LxYvFtFuyNp3GJjNyNki71hFddKOxcxGhdCqhohu0FuXv8chbT'
